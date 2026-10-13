@@ -1,55 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
+string a,b;
+int num[3][5000],len[5000];
 int main(){
-    string m,n;
-    cin>>m>>n;
-    int num1=m.size(),num2=n.size(),temp[666],i=0;
-    fill(temp,temp+666,0);
-    num1--,num2--;
-    while(num1>=0||num2>=0){
-    	int s;
-    	if(num1>=0&&num2>=0){
-    		s=m[num1]+n[num2]-'0'-'0';
-    		temp[i]+=s;
-    		if(temp[i]>=10){
-    			temp[i]%=10;
-				temp[i+1]++;
-			}
-			num1--,num2--;
-		}else if(num1<0&&num2>=0){
-				s=n[num2]-'0';
-    		temp[i]+=s;
-    		if(temp[i]>=10){
-    			temp[i]%=10;
-				temp[i+1]++;
-			}
-			num2--;
-		}else if(num1>=0&&num2<0){
-				s=m[num1]-'0';
-    		temp[i]+=s;
-    		if(temp[i]>=10){
-    			temp[i]%=10;
-				temp[i+1]++;
-			}
-			num1--;
-		}else{
-			if(temp[i]>=10){
-    			temp[i]%=10;
-				temp[i+1]++;
-			}
-		}
-		i++; 
+	cin>>a>>b;
+	for(int i=0;i<a.size();i++){
+		num[1][i]=(int)(a[a.size()-1-i]-'0');
 	}
-	bool state=false;
-	for(int i=555;i>=0;i--){
-		if(state==false&&temp[i]!=0){
-			state=true;
-		}
-		if(state){
-			cout<<temp[i];
-		}else if(!state&&i==0){
-			cout<<temp[i];
-		}
+	for(int i=0;i<b.size();i++){
+		num[2][i]=(int)(b[b.size()-1-i]-'0');
 	}
-	return 0;
-}
+	int carry=0;
+	for(int i=0;i<max(a.size(),b.size());i++){	
+	int sum; 
+	sum=num[1][i]+num[2][i]+carry;
+	num[0][i]=sum%10;
+	carry=sum/10;
+	}
+	if(carry){
+		cout<<'1';
+	}
+		for(int i=max(a.size(),b.size())-1;i>=0;i--){
+			cout<<num[0][i];
+		}
+		return 0;
+} 
